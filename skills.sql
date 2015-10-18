@@ -63,6 +63,9 @@ ON Models.brand_name = Brands.name WHERE year = 1960;
     --     ON b.name = m.brand_name
     -- WHERE b.discontinued IS NULL;
 
+    SELECT b.name,b.founded, m.name FROM Brands AS b LEFT JOIN Models AS m 
+    on b.name = m.brand_name WHERE b.discontinued IS NULL;
+
 -- 2. Modify this left join so it only selects models that have brands in the Brands table.
 -- before: 
     -- SELECT m.name,
@@ -72,8 +75,15 @@ ON Models.brand_name = Brands.name WHERE year = 1960;
     --   LEFT JOIN Brands AS b
     --     ON b.name = m.brand_name;
 
+SELECT m.name, m.brand_name, b.founded FROM Models AS m LEFT JOIN Brands AS b ON
+b.name = m.brand_name WHERE b.name IS NOT NULL;
 -- followup question: In your own words, describe the difference between 
 -- left joins and inner joins.
+
+--Inner joins and oleft joins are both ways to combine SQL tables. Inner joins 
+--combine the two tables using a common field in both tables (i.e. brand name in 
+--the previous examples) as long as the field is not null while left joins combine 
+--tables based on a field in the left able regardlss of whether or not the value is null. 
 
 -- 3. Modify the query so that it only selects brands that don't have any models in the models table. 
 -- (Hint: it should only show Tesla's row.)
@@ -97,7 +107,8 @@ ON Models.brand_name = Brands.name WHERE year = 1960;
     --   LEFT JOIN brands AS b
     --     ON m.brand_name = b.name
     -- WHERE b.discontinued NOT NULL;
-
+SELECT b.name,m.name,(b.discontinued-m.year) FROM Models AS m LEFT JOIN brands 
+AS b ON m.brand_name = b.name WHERE b.discontinued NOT NULL;
 
 
 
