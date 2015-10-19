@@ -80,7 +80,7 @@ b.name = m.brand_name WHERE b.name IS NOT NULL;
 -- followup question: In your own words, describe the difference between 
 -- left joins and inner joins.
 
---Inner joins and oleft joins are both ways to combine SQL tables. Inner joins 
+--Inner joins and left joins are both ways to combine SQL tables. Inner joins 
 --combine the two tables using a common field in both tables (i.e. brand name in 
 --the previous examples) as long as the field is not null while left joins combine 
 --tables based on a field in the left able regardlss of whether or not the value is null. 
@@ -93,6 +93,9 @@ b.name = m.brand_name WHERE b.name IS NOT NULL;
     -- FROM Brands
     --   LEFT JOIN Models
     --     ON brands.name = Models.brand_name
+
+    SELECT Brands.name, founded FROM Brands LEFT JOIN Models ON brands.name = Models.brand_name 
+    WHERE Models.name IS NULL;
     
 
 -- 4. Modify the query to add another column to the results to show 
