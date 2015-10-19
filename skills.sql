@@ -17,7 +17,7 @@ SELECT brand_name,name FROM Models WHERE year = 1964;
 -- 4. Select the model name, brand name, and headquarters for the Ford Mustang 
 --    from the Models and Brands tables.
 
-SELECT Models.name,brand_name, headquarters FROM Models Join Brands ON 
+SELECT Models.name,brand_name, headquarters FROM Models JOIN Brands ON 
 Models.brand_name = Brands.name WHERE Models.name = "Mustang" AND Brands.name = "Ford";
 
 -- 5. Select all rows for the three oldest brands 
@@ -27,7 +27,7 @@ SELECT *  FROM Brands ORDER BY founded LIMIT 3;
 
 -- 6. Count the Ford models in the database (output should be a number).
 
-SELECT COUNT(*) FROM Models Join Brands ON Models.brand_name = Brands.name 
+SELECT COUNT(*) FROM Models JOIN Brands ON Models.brand_name = Brands.name 
 WHERE Brands.name = "Ford"; 
 
 -- 7. Select the name of any and all car brands that are not discontinued.
@@ -36,7 +36,7 @@ SELECT name FROM Brands WHERE discontinued IS NULL;
 
 -- 8. Select rows 15-25 of the DB in alphabetical order by model name.
 
-SELECT * FROM Models Join Brands ON Models.brand_name = Brands.name 
+SELECT * FROM Models JOIN Brands ON Models.brand_name = Brands.name 
 ORDER BY Models.name LIMIT 20;
 
 -- 9. Select the brand, name, and year the model's brand was 
@@ -45,7 +45,7 @@ ORDER BY Models.name LIMIT 20;
 --    (The year the brand was founded should be NULL if 
 --    the brand is not in the Brands table.)
 
-SELECT brand_name, Models.name, founded FROM Models Join Brands 
+SELECT brand_name, Models.name, founded FROM Models JOIN Brands 
 ON Models.brand_name = Brands.name WHERE year = 1960;
 
 -- Part 2: Change the following queries according to the specifications. 
@@ -63,8 +63,8 @@ ON Models.brand_name = Brands.name WHERE year = 1960;
     --     ON b.name = m.brand_name
     -- WHERE b.discontinued IS NULL;
 
-    SELECT b.name,b.founded, m.name FROM Brands AS b LEFT JOIN Models AS m 
-    on b.name = m.brand_name WHERE b.discontinued IS NULL;
+SELECT b.name,b.founded, m.name FROM Brands AS b LEFT JOIN Models AS m 
+on b.name = m.brand_name WHERE b.discontinued IS NULL;
 
 -- 2. Modify this left join so it only selects models that have brands in the Brands table.
 -- before: 
@@ -77,6 +77,7 @@ ON Models.brand_name = Brands.name WHERE year = 1960;
 
 SELECT m.name, m.brand_name, b.founded FROM Models AS m LEFT JOIN Brands AS b ON
 b.name = m.brand_name WHERE b.name IS NOT NULL;
+
 -- followup question: In your own words, describe the difference between 
 -- left joins and inner joins.
 
@@ -94,8 +95,8 @@ b.name = m.brand_name WHERE b.name IS NOT NULL;
     --   LEFT JOIN Models
     --     ON brands.name = Models.brand_name
 
-    SELECT Brands.name, founded FROM Brands LEFT JOIN Models ON brands.name = Models.brand_name 
-    WHERE Models.name IS NULL;
+SELECT Brands.name, founded FROM Brands LEFT JOIN Models ON brands.name = Models.brand_name 
+WHERE Models.name IS NULL;
     
 
 -- 4. Modify the query to add another column to the results to show 
@@ -110,6 +111,7 @@ b.name = m.brand_name WHERE b.name IS NOT NULL;
     --   LEFT JOIN brands AS b
     --     ON m.brand_name = b.name
     -- WHERE b.discontinued NOT NULL;
+   
 SELECT b.name,m.name,(b.discontinued-m.year) FROM Models AS m LEFT JOIN brands 
 AS b ON m.brand_name = b.name WHERE b.discontinued NOT NULL;
 
@@ -118,6 +120,8 @@ AS b ON m.brand_name = b.name WHERE b.discontinued NOT NULL;
 -- Part 3: Further Study
 
 -- 1. Select the name of any brand with more than 5 models in the database.
+
+SELECT brand_name FROM Models GROUP BY name HAVING COUNT(name) > 5;
 
 -- 2. Add the following rows to the Models table.
 
@@ -152,6 +156,12 @@ INSERT INTO Awards VALUES('IIHS Safety Award', 2015, '2015 Subaru Outback');
 
 -- 5. Using a subquery, select only the *name* of any model whose 
 -- year is the same year that *any* brand was founded.
+SELECT Models.name FROM Models JOIN Brands ON
+  Models.brand_name = Brands.name
+  WHERE year IN
+  (SELECT founded FROM Brands);
+
+
 
 
 
