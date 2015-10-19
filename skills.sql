@@ -93,7 +93,7 @@ b.name = m.brand_name WHERE b.name IS NOT NULL;
     -- FROM Brands
     --   LEFT JOIN Models
     --     ON brands.name = Models.brand_name
-    -- WHERE Models.year > 1940;
+    
 
 -- 4. Modify the query to add another column to the results to show 
 -- the number of years from the year of the model until the brand becomes discontinued
@@ -123,10 +123,19 @@ AS b ON m.brand_name = b.name WHERE b.discontinued NOT NULL;
 -- 2015    Chevrolet  Malibu
 -- 2015    Subaru     Outback
 
+INSERT INTO Models VALUES(49, 2015,'Chevrolet','Malibu');
+INSERT INTO Models VALUES(50, 2015,'Subaru','Outback');
+
 -- 3. Write a SQL statement to crate a table called `Awards`
 --    with columns `name`, `year`, and `winner`. Choose
 --    an appropriate datatype and nullability for each column
 --   (no need to do subqueries here).
+
+CREATE TABLE Awards(
+    name VARCHAR(20) NOT NULL,
+    year INTEGER(4) NOT NULL,
+    winner VARCHAR(30)
+);
 
 -- 4. Write a SQL statement that adds the following rows to the Awards table:
 
@@ -134,6 +143,9 @@ AS b ON m.brand_name = b.name WHERE b.discontinued NOT NULL;
 --   ----                 ----      ---------------
 --   IIHS Safety Award    2015      the id for the 2015 Chevrolet Malibu
 --   IIHS Safety Award    2015      the id for the 2015 Subaru Outback
+
+INSERT INTO Awards VALUES('IIHS Safety Award', 2015, '2015 Chevrolet Malibu');
+INSERT INTO Awards VALUES('IIHS Safety Award', 2015, '2015 Subaru Outback');
 
 -- 5. Using a subquery, select only the *name* of any model whose 
 -- year is the same year that *any* brand was founded.
